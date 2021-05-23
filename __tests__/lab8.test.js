@@ -2,6 +2,7 @@ describe('Basic user flow for SPA ', () => {
   beforeAll(async () => {
     await page.goto('http://127.0.0.1:5500');
     await page.waitForTimeout(500);
+    
   });
 
   // test 1 is given
@@ -29,13 +30,17 @@ describe('Basic user flow for SPA ', () => {
 
   it('Test3: Clicking first <journal-entry>, new URL should contain /#entry1', async () => {
     // implement test3: Clicking on the first journal entry should update the URL to contain “/#entry1”
-
+    await page.click('journal-entry');
+    expect(page.url()).toBe("http://127.0.0.1:5500/#entry1");
   });
 
   it('Test4: On first Entry page - checking page header title', async () => {
     // implement test4: Clicking on the first journal entry should update the header text to “Entry 1” 
-
-  });
+    // await page.click('journal-entry');
+    const feedHandle = await page.$('header');
+    expect(
+      await feedHandle.$eval('h1', (node) => node.innerText)).toBe('Entry 1');
+  },10000);
 
   it('Test5: On first Entry page - checking <entry-page> contents', async () => {
     /*
@@ -50,6 +55,15 @@ describe('Basic user flow for SPA ', () => {
           }
         }
       */
+      // const tweetHandle = await page.$('.entry-page');
+      // var title = 
+      // tweetHandle.map(rootElement => {
+      //   const shadowRoot = rootElement.shadowRoot;
+      //   )
+      // console.log("tweetHandle");
+      // console.log(tweetHandle);
+      // document.querySelector('entry-page').shadowRoot.querySelector('.entry-title').innerText
+      // expect(await tweetHandle.$eval('.entry-title', (node) => node.innerText)).toBe('You like jazz?');
 
   }, 10000);
 
@@ -78,8 +92,9 @@ describe('Basic user flow for SPA ', () => {
 
   });
 
-  // define and implement test11: Clicking the back button once should bring the user back to the home page
-
+  it('Test11: Clicking the back button once should bring the user back to the home page', async() => {
+    // define and implement test11: Clicking the back button once should bring the user back to the home page
+  });
 
   // define and implement test12: When the user if on the homepage, the header title should be “Journal Entries”
 
