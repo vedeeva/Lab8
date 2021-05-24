@@ -144,6 +144,11 @@ describe('Basic user flow for SPA ', () => {
 
   it('Test13: On the home page the <body> element should not have any class attribute ', async() => {
   // define and implement test13: On the home page the <body> element should not have any class attribute 
+    const img_alt = await page.evaluate(() => {
+      return document.querySelector("body")
+      .classList[0];
+    });
+    expect(img_alt).toBe(undefined);
   });
 
   it('Test14: Verify the url is correct when clicking on the second entry', async() => {
@@ -154,6 +159,8 @@ describe('Basic user flow for SPA ', () => {
   });
   it('Test16: Verify the entry page contents is correct when clicking on the second entry', async() => {
   // define and implement test16: Verify the entry page contents is correct when clicking on the second entry
+  // await page.click('journal-entry');
+  // expect(page.url()).toBe("http://127.0.0.1:5500/#entry1");
   });
 
   // create your own test 17
