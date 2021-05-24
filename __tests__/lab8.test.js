@@ -127,7 +127,7 @@ describe('Basic user flow for SPA ', () => {
     // implement test10: Clicking on the back button should update the URL to contain ‘/#entry1’
     await page.goBack();
     expect(page.url()).toBe("http://127.0.0.1:5500/#entry1");
-  });
+  },10000);
 
   it('Test11: Clicking the back button once should bring the user back to the home page', async() => {
     // define and implement test11: Clicking the back button once should bring the user back to the home page
@@ -149,26 +149,76 @@ describe('Basic user flow for SPA ', () => {
       .classList[0];
     });
     expect(img_alt).toBe(undefined);
-  });
+  },);
 
   it('Test14: Verify the url is correct when clicking on the second entry', async() => {
   // define and implement test14: Verify the url is correct when clicking on the second entry
-  });
+      await page.waitForSelector('journal-entry');
+      const selectors = await page.$$('journal-entry');
+      await selectors[1].click();
+      expect(page.url()).toBe("http://127.0.0.1:5500/#entry2");
+    }, 30000);
+
   it('Test15: Verify the title is current when clicking on the second entry', async() => {
   // define and implement test15: Verify the title is current when clicking on the second entry
-  });
+    const result = await page.evaluate(() => {
+      return document.querySelector("entry-page")
+      .shadowRoot.querySelector(".entry-title")
+      .innerText;
+    });
+    expect(result).toBe('Run, Forrest! Run!');
+  },);
+
   it('Test16: Verify the entry page contents is correct when clicking on the second entry', async() => {
   // define and implement test16: Verify the entry page contents is correct when clicking on the second entry
-  // await page.click('journal-entry');
-  // expect(page.url()).toBe("http://127.0.0.1:5500/#entry1");
+  const content = await page.evaluate(() => {
+    return document.querySelector("entry-page")
+    .shadowRoot.querySelector(".entry-content")
+    .innerText;
   });
+expect(content).toBe("Mama always said life was like a box of chocolates. You never know what you're gonna get.");
+},10000);
 
-  // create your own test 17
+it('Test17: Verify the url is correct when clicking back from the second entry', async() => {
+  // define and implement test17: Verify the url is correct when clicking on the second entry
+      await page.goBack();
+      // await page.waitForSelector('journal-entry');
+      // const selectors = await page.$$('journal-entry');
+      // await selectors[2].click();
+      expect(page.url()).toBe("http://127.0.0.1:5500/");
+    }, 10000);
 
-  // create your own test 18
+  it('Test18: Verify the url is correct when clicking back from the third entry', async() => {
+    // define and implement test18:Verify the url is correct when clicking back from the third entry
+    const img_src = await page.evaluate(() => {
+      return document.querySelector("img")
+      .src;
+    });
+    expect(img_src).toBe("http://127.0.0.1:5500/styles/settings.svg");
+    
+    },10000);
 
-  // create your own test 19
+    it('Test19: Verify the url is correct when clicking back from the third entry', async() => {
+      // define and implement test18:Verify the url is correct when clicking back from the third entry
+      const img_alt = await page.evaluate(() => {
+        return document.querySelector("img")
+        .alt;
+      });
+      expect(img_alt).toBe("settings");
+      
+      },);
 
-  // create your own test 20
+    it('Test19: Verify the url is correct when clicking back from the third entry', async() => {
+        // define and implement test18:Verify the url is correct when clicking back from the third entry
+        const img_width = await page.evaluate(() => {
+          return document.querySelector("img")
+          .width;
+        });
+        expect(img_width).toBe(40);
+        
+        },);
+
+
+
   
 });
